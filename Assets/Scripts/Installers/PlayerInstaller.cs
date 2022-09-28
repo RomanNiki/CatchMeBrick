@@ -18,7 +18,6 @@ namespace Installers
             Container.Bind<IInput>().To<CanvasJoystickInput>().AsSingle();
             Container.BindInstance(_cameraFollower).AsSingle();
             Container.BindInstance(_camera).AsSingle();
-            var f = 5 * 3;
         }
     }
 }

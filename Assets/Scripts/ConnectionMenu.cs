@@ -1,10 +1,20 @@
-using Misc;
+using System.Collections.Generic;
+using AssetLoaders;
+using Loading.LoadingOperations;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Zenject;
 
 public class ConnectionMenu : MonoBehaviour
 {
+    private static LoadingScreenProvider _provider;
+
+    [Inject] 
+    public void Constructor(LoadingScreenProvider provider)
+    {
+        _provider = provider;
+    }
+    
     private void OnEnable()
     {
         NetworkManager.Singleton.OnServerStarted += ServerStarted;
@@ -15,12 +25,11 @@ public class ConnectionMenu : MonoBehaviour
         NetworkManager.Singleton.OnServerStarted -= ServerStarted;
     }
 
-    private static void ServerStarted()
+    private static async void ServerStarted()
     {
-        using (new Load("Logging you in..."))
-        {
-            NetworkManager.Singleton.SceneManager.LoadScene(Scenes.Lobby, LoadSceneMode.Single);
-        }
+        var loadingOperations = new Queue<ILoadingOperation>();
+        loadingOperations.Enqueue(new LobbyLoadingOperation());
+        await _provider.LoadAndDestroy(loadingOperations);
     }
     
     public void StartHost()
