@@ -13,11 +13,19 @@ namespace Installers
         
         public override void InstallBindings()
         {
-            Container.BindInstance(_joystick).AsSingle();
-            Container.Bind<PlayerInput>().To<PlayerInput>().AsSingle();
-            Container.Bind<IInput>().To<CanvasJoystickInput>().AsSingle();
-            Container.BindInstance(_cameraFollower).AsSingle();
-            Container.BindInstance(_camera).AsSingle();
+            if (Application.isMobilePlatform)
+            {
+                Container.BindInstance(_joystick).AsSingle();
+                Container.Bind<IInput>().To<CanvasJoystickInput>().FromNew().AsSingle().WithArguments(_joystick);
+            }
+            else
+            {
+                var playerInput = new PlayerInput();
+                Container.Bind<IInput>().To<NewInputSystem>().FromNew().AsSingle().WithArguments(playerInput);
+            }
+           
+            Container.BindInstance(_cameraFollower).AsTransient();
+            Container.BindInstance(_camera).AsTransient();
         }
     }
 }

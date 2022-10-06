@@ -19,14 +19,15 @@ namespace Loading
         [SerializeField] private TMP_Text _loaderText, _errorText;
         [SerializeField] private Slider _progressFill;
         [SerializeField] private float _barSpeed;
-        
+
         private TweenerCore<float, float, FloatOptions> _tween;
         private float _targetProgress;
         private bool _isProgress;
-        
-        private void Awake() {
+
+        private async void Awake()
+        {
             DontDestroyOnLoad(this);
-            Toggle(false, instant: true);
+            await Toggle(true);
         }
 
         private void OnDestroy()
@@ -36,29 +37,28 @@ namespace Loading
 
         public async UniTask Load(Queue<ILoadingOperation> loadingOperations)
         {
-            Toggle(true);
             StartCoroutine(UpdateProgressBar());
-            
             foreach (var operation in loadingOperations)
             {
                 ResetFill();
                 _loaderText.text = operation.Description;
-
                 await operation.Load(OnProgress);
                 await WaitForBarFill();
             }
-            
-            Toggle(false);
+
+            await Toggle(false);
         }
 
-        private void Toggle(bool on, bool instant = false) {
-            _loader.enabled = on;
+        private async UniTask Toggle(bool on, bool instant = false)
+        {
             _tween?.Kill();
             _tween = _loader.DOFade(on ? 1 : 0, instant ? 0 : _fadeTime);
-           
+            await _tween.AsyncWaitForCompletion();
+            _loader.enabled = on;
         }
 
-        public void ShowError(string error) {
+        public void ShowError(string error)
+        {
             _errorText.text = error;
             _errorText.DOFade(1, _fadeTime).OnComplete(() => { _errorText.DOFade(0, _fadeTime).SetDelay(1); });
         }
@@ -80,6 +80,7 @@ namespace Loading
             {
                 await UniTask.Delay(1);
             }
+
             await UniTask.Delay(TimeSpan.FromSeconds(0.15f));
         }
 
@@ -88,10 +89,12 @@ namespace Loading
             while (_loader.enabled)
             {
                 if (_progressFill.value < _targetProgress)
+                {
                     _progressFill.value += Time.deltaTime * _barSpeed;
+                }
+
                 yield return null;
             }
         }
-        
     }
 }

@@ -1,44 +1,26 @@
-using System.Collections.Generic;
-using AssetLoaders;
-using Loading.LoadingOperations;
-using Unity.Netcode;
+using Networking;
 using UnityEngine;
 using Zenject;
 
 public class ConnectionMenu : MonoBehaviour
 {
-    private static LoadingScreenProvider _provider;
+    private GameNetPortal _gameNetPortal;
+    private ClientGameNetPortal _clientGameNetPortal;
 
-    [Inject] 
-    public void Constructor(LoadingScreenProvider provider)
+    [Inject]
+    public void Constructor(GameNetPortal gameNetPortal, ClientGameNetPortal clientGameNetPortal)
     {
-        _provider = provider;
-    }
-    
-    private void OnEnable()
-    {
-        NetworkManager.Singleton.OnServerStarted += ServerStarted;
+        _gameNetPortal = gameNetPortal;
+        _clientGameNetPortal = clientGameNetPortal;
     }
 
-    private void OnDisable()
-    {
-        NetworkManager.Singleton.OnServerStarted -= ServerStarted;
-    }
-
-    private static async void ServerStarted()
-    {
-        var loadingOperations = new Queue<ILoadingOperation>();
-        loadingOperations.Enqueue(new LobbyLoadingOperation());
-        await _provider.LoadAndDestroy(loadingOperations);
-    }
-    
     public void StartHost()
     {
-        NetworkManager.Singleton.StartHost();
+        _gameNetPortal.StartHost("127.0.0.1", 7777);
     }
-    
+
     public void StartClient()
     {
-        NetworkManager.Singleton.StartClient();
+        _clientGameNetPortal.StartClient("127.0.0.1", 7777);
     }
 }

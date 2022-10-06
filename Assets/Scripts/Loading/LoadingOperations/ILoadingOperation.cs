@@ -5,7 +5,7 @@ namespace Loading.LoadingOperations
 {
     public interface ILoadingOperation
     {
-        string Description { get; }
+        string Description { get;}
         UniTask Load(Action<float> onProgress);
     }
 }

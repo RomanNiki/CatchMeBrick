@@ -2,7 +2,7 @@
 
 namespace Lobby
 {
-    public class PlayerData : ScriptableObject
+    public class PlayerCardData : ScriptableObject
     {
         [SerializeField] private string _name;
         [SerializeField] private Sprite _playerSprite;

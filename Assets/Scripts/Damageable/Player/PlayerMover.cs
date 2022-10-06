@@ -22,14 +22,13 @@ namespace Damageable.Player
             _input = input;
             _input.Enable();
             _camera = cam;
-            Debug.Log(input);
-            Observable.EveryFixedUpdate().Subscribe(_ =>
+            Observable.EveryLateUpdate().Subscribe(_ =>
             {
                 FixedTick();
             }).AddTo(_disposable);
         }
         
-        private void OnEnable()
+        private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
         }
@@ -39,17 +38,7 @@ namespace Damageable.Player
             _input?.Disable();
             _disposable.Clear();
         }
-
-        private void FixedTick()
-        {
-            if (!IsOwner) return;
-            var direction = _input.MoveDirection;
-            var camDirection = _camera.transform.rotation * direction;
-            var moveDirection = new Vector3(camDirection.x, 0, camDirection.z);
-            Move(moveDirection * (_moveSpeed * Time.fixedDeltaTime));
-            Rotate(moveDirection);
-        }
-
+        
         public override void OnNetworkSpawn()
         {
             if (!IsOwner)
@@ -59,9 +48,19 @@ namespace Damageable.Player
             }
         }
 
+        private void FixedTick()
+        {
+            if (!IsOwner || _input == null) return;
+            var direction = _input.MoveDirection;
+            var camDirection = _camera.transform.rotation * direction;
+            var moveDirection = new Vector3(camDirection.x, 0, camDirection.z);
+            Move(moveDirection * (_moveSpeed * Time.fixedDeltaTime));
+            Rotate(moveDirection);
+        }
+
         private void Move(Vector3 moveDirection)
         {
-            _rigidbody.MovePosition(transform.position + moveDirection);
+            _rigidbody.MovePosition(transform.position + moveDirection); 
         }
 
         private void Rotate(Vector3 moveDirection)

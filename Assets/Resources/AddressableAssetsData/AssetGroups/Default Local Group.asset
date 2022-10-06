@@ -21,6 +21,14 @@ MonoBehaviour:
     m_Address: LoadingScreen
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 197e43ee8568f1c45a973e2e392fec0f
+    m_Address: Fonts/Commodore Pixelized v1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
+    m_Address: Assets/TextMesh Pro/Shaders/TMP_SDF.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a769202412db1004cb349a89779585cf, type: 2}
   m_SchemaSet:
