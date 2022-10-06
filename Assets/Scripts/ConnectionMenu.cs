@@ -1,35 +1,26 @@
-using Misc;
-using Unity.Netcode;
+using Networking;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Zenject;
 
 public class ConnectionMenu : MonoBehaviour
 {
-    private void OnEnable()
+    private GameNetPortal _gameNetPortal;
+    private ClientGameNetPortal _clientGameNetPortal;
+
+    [Inject]
+    public void Constructor(GameNetPortal gameNetPortal, ClientGameNetPortal clientGameNetPortal)
     {
-        NetworkManager.Singleton.OnServerStarted += ServerStarted;
+        _gameNetPortal = gameNetPortal;
+        _clientGameNetPortal = clientGameNetPortal;
     }
 
-    private void OnDisable()
-    {
-        NetworkManager.Singleton.OnServerStarted -= ServerStarted;
-    }
-
-    private static void ServerStarted()
-    {
-        using (new Load("Logging you in..."))
-        {
-            NetworkManager.Singleton.SceneManager.LoadScene(Scenes.Lobby, LoadSceneMode.Single);
-        }
-    }
-    
     public void StartHost()
     {
-        NetworkManager.Singleton.StartHost();
+        _gameNetPortal.StartHost("127.0.0.1", 7777);
     }
-    
+
     public void StartClient()
     {
-        NetworkManager.Singleton.StartClient();
+        _clientGameNetPortal.StartClient("127.0.0.1", 7777);
     }
 }

@@ -18,7 +18,15 @@ MonoBehaviour:
   m_GUID: c587ad6abbaec8043bbbe08beea7227e
   m_SerializeEntries:
   - m_GUID: 0a84a68d2b1ad7b41bd04bf41ee6a393
-    m_Address: Assets/Prefabs/CanvasUtilies.prefab
+    m_Address: LoadingScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 197e43ee8568f1c45a973e2e392fec0f
+    m_Address: Fonts/Commodore Pixelized v1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
+    m_Address: Assets/TextMesh Pro/Shaders/TMP_SDF.shader
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

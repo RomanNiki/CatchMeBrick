@@ -4,3 +4,10 @@
     public static string Lobby => nameof(Lobby);
     public static string Game => nameof(Game);
 }
+
+public enum ScenesEnum
+{
+    Connect,
+    Lobby,
+    Game
+}

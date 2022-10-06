@@ -5,10 +5,10 @@ namespace Inputs.InputTypes
 {
     public class NewInputSystem : Input
     {
-        private PlayerInput _input;
+        private readonly PlayerInput _input;
         
         [Inject]
-        public void Constructor(PlayerInput input)
+        public NewInputSystem(PlayerInput input)
         {
             _input = input;
         }

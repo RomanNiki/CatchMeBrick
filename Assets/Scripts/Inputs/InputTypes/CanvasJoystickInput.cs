@@ -5,10 +5,10 @@ namespace Inputs.InputTypes
 {
     public class CanvasJoystickInput : Input
     {
-        private Joystick _joystick;
+        private readonly Joystick _joystick;
 
         [Inject]
-        public void Constructor(Joystick joystick)
+        public CanvasJoystickInput(Joystick joystick)
         {
             _joystick = joystick;
         }

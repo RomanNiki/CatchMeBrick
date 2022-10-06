@@ -1,11 +1,12 @@
 ﻿using Followers.Camera;
 using Unity.Netcode;
+using Zenject;
 
 namespace Damageable.Player
 {
     public class CameraController : NetworkBehaviour
     {
-        private CameraFollower _cam;
+        [Inject] private CameraFollower _cam;
 
         private void Start()
         {
@@ -15,7 +16,6 @@ namespace Damageable.Player
         [ClientRpc]
         private void SetCameraClientRpc()
         {
-            _cam = FindObjectOfType<CameraFollower>();
             if (_cam == null || !IsOwner)
             {
                 return;
