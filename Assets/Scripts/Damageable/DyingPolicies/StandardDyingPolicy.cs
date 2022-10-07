@@ -1,6 +1,6 @@
-namespace Damageables.DyingPolicies
+namespace Damageable.DyingPolicies
 {
-    public class StandartDyingPolicy : IDyingPolicy
+    public class StandardDyingPolicy : IDyingPolicy
     {
         public bool Died(float value)
         {

@@ -1,4 +1,4 @@
-﻿using Damageable.Player;
+﻿using Player;
 using Unity.Netcode;
 using UnityEngine;
 using Zenject;
@@ -8,7 +8,7 @@ namespace Factories
 {
     public class PlayerFactory : NetworkBehaviour
     {
-        [SerializeField] private PlayerHealth _playerPrefab;
+        [SerializeField] private PlayerView _playerPrefab;
         [SerializeField] private Transform _spawnPoint;
         [Inject] private DiContainer _container;
         public override void OnNetworkSpawn()
@@ -33,7 +33,8 @@ namespace Factories
         {
             if (playerId == NetworkManager.Singleton.LocalClientId)
             {
-                _container.InjectGameObject(NetworkManager.SpawnManager.GetPlayerNetworkObject(playerId).gameObject);
+                var player = NetworkManager.SpawnManager.GetPlayerNetworkObject(playerId).gameObject;
+                _container.InjectGameObject(player);
             }
         }
 

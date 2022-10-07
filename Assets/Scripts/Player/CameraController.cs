@@ -2,7 +2,7 @@
 using Unity.Netcode;
 using Zenject;
 
-namespace Damageable.Player
+namespace Player
 {
     public class CameraController : NetworkBehaviour
     {
