@@ -1,4 +1,4 @@
-namespace Damageables.DyingPolicies
+namespace Damageable.DyingPolicies
 {
     public interface IDyingPolicy
     {

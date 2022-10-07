@@ -168,7 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: e9b8ce94304a8134ea8c27596ebee267, type: 2}
   _monoInstallers:
   - {fileID: 508900321}
   _installerPrefabs: []
@@ -568,7 +569,7 @@ GameObject:
   - component: {fileID: 508900320}
   - component: {fileID: 508900321}
   m_Layer: 0
-  m_Name: PlayerInstaller
+  m_Name: GameSceneInstaller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -601,9 +602,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc36f21eac295a418cf0e985b530c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _joystick: {fileID: 1641112867}
-  _cameraFollower: {fileID: 477514585}
-  _camera: {fileID: 1280410318}
+  _settings:
+    Joystick: {fileID: 1641112867}
+    CameraFollower: {fileID: 477514585}
+    Camera: {fileID: 1280410318}
 --- !u!1 &702238127
 GameObject:
   m_ObjectHideFlags: 0

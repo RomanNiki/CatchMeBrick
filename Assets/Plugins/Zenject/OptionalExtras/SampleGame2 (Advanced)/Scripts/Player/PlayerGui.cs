@@ -46,7 +46,6 @@ namespace Zenject.SpaceFighter
 
             _textureForeground = CreateColorTexture(_foregroundColor);
             _textureBackground = CreateColorTexture(_backgroundColor);
-
             signalBus.Subscribe<EnemyKilledSignal>(OnEnemyKilled);
         }
 
